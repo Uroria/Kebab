@@ -25,14 +25,21 @@ subprojects {
     val lombokVersion: String by project.extra
     val slf4jVersion: String by project.extra
     dependencies {
-        implementation("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
-        implementation("org.projectlombok:lombok:${lombokVersion}")
+        compileOnly("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
+        compileOnly("org.projectlombok:lombok:${lombokVersion}")
+        annotationProcessor("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
+        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
         api("org.slf4j:slf4j-api:$slf4jVersion")
     }
 
     java.toolchain {
-        languageVersion.set(JavaLanguageVersion.of(16))
+        languageVersion.set(JavaLanguageVersion.of(19))
+    }
+
+    tasks.register("buildApplication") {
+        doFirst {
+            println("Building application")
+        }
     }
 }
-

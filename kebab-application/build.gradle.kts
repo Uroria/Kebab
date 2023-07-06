@@ -1,7 +1,11 @@
 plugins {
     application
+    id("org.graalvm.buildtools.native") version("0.9.23")
 }
 
+graalvmNative {
+    toolchainDetection.set(true)
+}
 
 application {
     mainClass.set("com.uroria.kebab.application.Bootstrap")
@@ -20,4 +24,11 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:${log4jVersion}")
     implementation("org.apache.logging.log4j:log4j-iostreams:${log4jVersion}")
     implementation("org.apache.logging.log4j:log4j-jul:${log4jVersion}")
+}
+
+tasks {
+    buildApplication {
+        dependsOn(shadowJar)
+        dependsOn(nativeCompile)
+    }
 }
