@@ -18,20 +18,15 @@ public class KebabConfiguration {
     private @Getter @Setter String sentryDSN;
 
     public void reload() {
-        version = setVersion(config().getOrSetDefault("minecraft.version", "1.20"));
+        version = Version.getByName(config().getOrSetDefault("minecraft.version", "1.20"));
         host = config().getString("socket.host");
         port = config().getInt("socket.port");
         sentryEnabled = config().getBoolean("sentry.enabled");
         sentryDSN = config().getString("sentry.dsn");
     }
 
-    public Version setVersion(String name) {
-        return setVersion(Version.getByName(name));
-    }
-
-    public Version setVersion(Version newVersion) {
-        version = newVersion;
-        return version;
+    public void setVersion(String name) {
+        version = Version.getByName(name);
     }
 
     Toml config() {
