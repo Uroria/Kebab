@@ -10,5 +10,4 @@ import java.lang.annotation.Target;
 public @interface Packet {
     byte id();
     State state();
-    Version version();
 }

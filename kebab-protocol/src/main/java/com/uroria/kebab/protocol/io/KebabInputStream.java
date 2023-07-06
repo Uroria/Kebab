@@ -3,16 +3,18 @@ package com.uroria.kebab.protocol.io;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.BitSet;
+import java.util.UUID;
 
 public final class KebabInputStream extends DataInputStream {
     private static final int SEGMENT_BITS = 0x7F;
     private static final int CONTINUE_BIT = 0x80;
 
-    private final ByteArrayInputStream input;
-
-    public KebabInputStream(ByteArrayInputStream input) {
-        super(input);
-        this.input = input;
+    public KebabInputStream(InputStream inputStream) {
+        super(inputStream);
     }
 
     public KebabInputStream(byte[] bytes) {
@@ -57,9 +59,34 @@ public final class KebabInputStream extends DataInputStream {
         return value;
     }
 
+    public BitSet readFixedBitSet(int i) throws IOException {
+        byte[] abyte = new byte[-Math.floorDiv(-i, 8)];
+        readFully(abyte);
+        return BitSet.valueOf(abyte);
+    }
+
+    public UUID readUUID() throws IOException {
+        return new UUID(readLong(), readLong());
+    }
+
+    public String readString(Charset charset) throws IOException {
+        int length = readVarInt();
+
+        if (length == -1) {
+            throw new IOException("Premature end of stream.");
+        }
+
+        byte[] b = new byte[length];
+        readFully(b);
+        return new String(b, charset);
+    }
+
+    public String readString() throws IOException {
+        return readString(StandardCharsets.UTF_8);
+    }
+
     @Override
     public void close() throws IOException {
         super.close();
-        input.close();
     }
 }
