@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.UtilityClass;
 
+import java.net.InetSocketAddress;
+
 @UtilityClass
 public class KebabConfiguration {
     private final Toml config = new Toml("kebab.toml", ".", KebabServer.class.getClassLoader().getResourceAsStream("config.toml"), ReloadSettings.MANUALLY, null);
@@ -23,6 +25,10 @@ public class KebabConfiguration {
         port = config().getInt("socket.port");
         sentryEnabled = config().getBoolean("sentry.enabled");
         sentryDSN = config().getString("sentry.dsn");
+    }
+
+    public InetSocketAddress getAddress() {
+        return new InetSocketAddress(host, port);
     }
 
     public void setVersion(String name) {
