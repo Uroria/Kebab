@@ -1,0 +1,4 @@
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
