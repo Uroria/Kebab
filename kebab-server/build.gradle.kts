@@ -2,8 +2,7 @@
 val sentryVersion: String by project.extra
 
 dependencies {
-    implementation(project(":kebab-api"))
-    implementation(project(":kebab-common"))
+    api(project(":kebab-api"))
 
     api("io.sentry:sentry:${sentryVersion}")
 }

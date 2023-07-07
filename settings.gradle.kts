@@ -5,8 +5,13 @@ val modules = listOf(
         "kebab-common",
         "kebab-application",
         "kebab-server",
-        "kebab-protocol"
+        "kebab-protocol",
+        "kebab-libs"
 )
+
+pluginManagement {
+    includeBuild("cargo-wrapper")
+}
 
 include(modules)
 modules.forEach { module -> findProject(":${module}")?.name = module }

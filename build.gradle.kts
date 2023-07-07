@@ -7,7 +7,7 @@ plugins {
 }
 
 allprojects {
-    group = "com.uroria.kebab"
+    group = "org.kebab"
     version = project.properties["version"].toString()
 }
 
@@ -45,7 +45,7 @@ subprojects {
     }
 
     java.toolchain {
-        languageVersion.set(JavaLanguageVersion.of(19))
+        languageVersion.set(JavaLanguageVersion.of(16))
     }
 
     tasks.register("buildApplication") {

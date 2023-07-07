@@ -8,7 +8,7 @@ graalvmNative {
 }
 
 application {
-    mainClass.set("com.uroria.kebab.application.Bootstrap")
+    mainClass.set("org.kebab.application.Bootstrap")
 }
 
 val apacheCommonsCLIVersion: String by project.extra

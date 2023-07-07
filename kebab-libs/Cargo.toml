@@ -1,0 +1,10 @@
+[package]
+name = "kebab_cargo_wrapper"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+crate_type = ["cdylib"]
+
+[dependencies]
+jni = "0.21.1"
